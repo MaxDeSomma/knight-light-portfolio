@@ -1,3 +1,4 @@
-/.quarto/
+.quarto
 /_site/
-/Thumbs.db/
+Thumbs.db
+.DS_store
