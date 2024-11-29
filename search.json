@@ -1,16 +1,37 @@
 [
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
+    "objectID": "mcu.html",
+    "href": "mcu.html",
+    "title": "MCU Design",
     "section": "",
-    "text": "Luke Summers:\nMax De Somma:"
+    "text": "Test"
   },
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Knight Light Portfolio",
+    "title": "Project Overview",
     "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
+    "text": "E155 Final Project: Interactive Chess\nMax De Somma and Luke Summers\nDecember 2024"
+  },
+  {
+    "objectID": "fpga.html",
+    "href": "fpga.html",
+    "title": "FPGA Design",
+    "section": "",
+    "text": "Test"
+  },
+  {
+    "objectID": "results.html",
+    "href": "results.html",
+    "title": "Project Results",
+    "section": "",
+    "text": "Test"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About the Team",
+    "section": "",
+    "text": "Luke Summers:\nMax De Somma:"
   }
 ]
