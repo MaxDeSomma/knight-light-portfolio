@@ -2,12 +2,19 @@ project:
   type: website
 
 website:
-  title: "Knight Light Portfolio"
+  title: "Knight Light"
   navbar:
     left:
       - href: index.qmd
         text: Home
-      - about.qmd
+      - href: fpga.qmd
+        text: FPGA Design
+      - href: mcu.qmd
+        text: MCU Design
+      - href: results.qmd
+        text: Results
+      - href: about.qmd
+        text: The Team
 
 format:
   html:
