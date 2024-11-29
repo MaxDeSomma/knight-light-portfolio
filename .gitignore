@@ -1,4 +1,5 @@
-.quarto
-/_site/
+.quarto/
+_site/
+/.quarto/
 Thumbs.db
 .DS_store
