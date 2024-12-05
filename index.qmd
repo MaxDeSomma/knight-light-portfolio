@@ -1,11 +1,28 @@
 ---
-title: "Project Overview"
+title: 'WELCOME TO THE FUTURE OF CHESS'
+format:
+  html: 
+    code-links:
+      - text: "Project Repository"
+        href: https://github.com/lukesummers-20/knight-light
+        icon: github
 ---
+# Project Overview 
 
-E155 Final Project: Interactive Chess
+## Project Abstract
+The goal of this project was to create a smart chess board. Everytime a chess piece is picked up our chess board will calculate the pieces available moves and light up specific moves. It will take into account board boundries and other chess pieces so that there are no illegal moves as well as display when the specific piece is able to capture an opponents piece. (IF WE GET CHECK TO WORK PUT HERE)
 
-Max De Somma and Luke Summers
+## Project Motivation
+We wanted to create this as our Microps final project because we thought this could make chess more accessible to younger people or those unfamiliar to the game of chess. There are many pieces in chess with different move patterns. New players often overlook all the possible moves that they could make with each piece and when you can capture opposing pieces. Lastly on of the hardest parts of chess that takes experience is knowing when you are in check. Our board will help aid new players and allow them to get into the game of chess. We thought that we could use the skills we learned in Microps to bring this idea to life. 
 
-December 2024
+![](images/confused.png)
+
+## System Design
+
+![](images/systemDesign.png)
+
+To sense when pieces are picked up. Digital hall effect sensors are used that sense a magnetic field. Each piece will be fitted with a magnet so that when it is lifted the hall effect sensors will sense a change in magnetic field and our system will be able to control the individually adressable LEDs to light up available moves and captures. In our design the FPGA is responsible for controlling 64 hall effect sensors powering them on and recieving board data from them. It will then use SPI to send the data over to the MCU. From there the MCU will control the individually addressable LED's lighting up specific colors. (AND MAYBE SPEAKER).
+
+
 
 
