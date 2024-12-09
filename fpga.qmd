@@ -1,7 +1,27 @@
 ---
-title: "FPGA Design"
+title: 'FPGA Design'
+format:
+  html: 
+    code-links:
+      - text: "FPGA Repository"
+        href: https://github.com/lukesummers-20/knight-light
+        icon: github
 ---
 
-Test
+## FPGA Role
+The role of the FPGA in this project was to interact with the hall effect sensors. The SMT hall effect sensors we used were a new hardware that needed to be powered with 3.3 V on `Vcc` and ground on `GND`. Once powered they had an `OUT` pin that would provide a high signal in the absense of a magnetic field and a low signal if a magnet was nearby. 
 
+![](images/hallEffectPins.png)
+
+The hall effect sensors were aranged in a matrix. This allowed us to wire all the `Vcc` pins in parallel across the rows and the `OUT` pin in parallel across the columns. This design significantly saves on wires. Instead of needing 64 wires for each data pin, only 16 wires were used. Each of the eight row pins was powered one at a time and the packet of eight column pins was recorded. The packets could then be stitched together to create the current state of the board indicating where pieces are. 
+
+Once the FPGA successfully scans through the rows and calculates the board state, it simulates the SPI protocol to send the board state over to the MCU. 
+
+# FPGA System
+
+The FPGA follows the block diagram layed out below.
+
+![](images/fpgaDiagram.png)
+
+There are two main modules `scanningFSM` and `boardSPI`. `scanningFSM` first takes in `clk` which is a slowed down version of `int_osc` from the `HSOSC` module. It also takes `reset` in from the FPGA input `load` which comes from the MCU when it begins a new SPI request. Lastly it takes in `c` which is the 
 

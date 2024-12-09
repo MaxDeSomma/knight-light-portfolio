@@ -14,6 +14,8 @@ website:
         text: MCU Design
       - href: results.qmd
         text: Results
+      - href: documentation.qmd
+        text: Documentation
       - href: about.qmd
         text: The Team
 
