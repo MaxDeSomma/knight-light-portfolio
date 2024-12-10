@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.39">
+<meta name="generator" content="quarto-1.5.56">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Project Overview – Knight Light</title>
+<title>WELCOME TO THE FUTURE OF CHESS – Knight Light</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -36,10 +36,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-6bd9cfa162949bde0a231f530c97869d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -106,6 +106,10 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Results</span></a>
   </li>  
   <li class="nav-item">
+    <a class="nav-link" href="./documentation.html"> 
+<span class="menu-text">Documentation</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link" href="./about.html"> 
 <span class="menu-text">The Team</span></a>
   </li>  
@@ -120,15 +124,26 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#project-overview" id="toc-project-overview" class="nav-link active" data-scroll-target="#project-overview">Project Overview</a>
+  <ul class="collapse">
+  <li><a href="#project-abstract" id="toc-project-abstract" class="nav-link" data-scroll-target="#project-abstract">Project Abstract</a></li>
+  <li><a href="#project-motivation" id="toc-project-motivation" class="nav-link" data-scroll-target="#project-motivation">Project Motivation</a></li>
+  <li><a href="#system-design" id="toc-system-design" class="nav-link" data-scroll-target="#system-design">System Design</a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-code-links"><h2>Code Links</h2><ul><li><a href="https://github.com/lukesummers-20/knight-light"><i class="bi bi-github"></i>Project Repository</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Project Overview</h1>
+<h1 class="title">WELCOME TO THE FUTURE OF CHESS</h1>
 </div>
 
 
@@ -145,11 +160,25 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>E155 Final Project: Interactive Chess</p>
-<p>Max De Somma and Luke Summers</p>
-<p>December 2024</p>
+<section id="project-overview" class="level1">
+<h1>Project Overview</h1>
+<section id="project-abstract" class="level2">
+<h2 class="anchored" data-anchor-id="project-abstract">Project Abstract</h2>
+<p>The goal of this project was to create a smart chess board. Everytime a chess piece is picked up our chess board will calculate the pieces available moves and light up specific moves. It will take into account board boundries and other chess pieces so that there are no illegal moves as well as display when the specific piece is able to capture an opponents piece. (IF WE GET CHECK TO WORK PUT HERE)</p>
+</section>
+<section id="project-motivation" class="level2">
+<h2 class="anchored" data-anchor-id="project-motivation">Project Motivation</h2>
+<p>We wanted to create this as our Microps final project because we thought this could make chess more accessible to younger people or those unfamiliar to the game of chess. There are many pieces in chess with different move patterns. New players often overlook all the possible moves that they could make with each piece and when you can capture opposing pieces. Lastly on of the hardest parts of chess that takes experience is knowing when you are in check. Our board will help aid new players and allow them to get into the game of chess. We thought that we could use the skills we learned in Microps to bring this idea to life.</p>
+<p><img src="images/confused.png" class="img-fluid"></p>
+</section>
+<section id="system-design" class="level2">
+<h2 class="anchored" data-anchor-id="system-design">System Design</h2>
+<p><img src="images/systemDesign.png" class="img-fluid"></p>
+<p>To sense when pieces are picked up. Digital hall effect sensors are used that sense a magnetic field. Each piece will be fitted with a magnet so that when it is lifted the hall effect sensors will sense a change in magnetic field and our system will be able to control the individually adressable LEDs to light up available moves and captures. In our design the FPGA is responsible for controlling 64 hall effect sensors powering them on and recieving board data from them. It will then use SPI to send the data over to the MCU. From there the MCU will control the individually addressable LED’s lighting up specific colors. (AND MAYBE SPEAKER).</p>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -234,6 +263,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -344,6 +375,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
+      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {

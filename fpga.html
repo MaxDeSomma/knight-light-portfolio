@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.39">
+<meta name="generator" content="quarto-1.5.56">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -36,10 +36,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-6bd9cfa162949bde0a231f530c97869d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -106,6 +106,10 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Results</span></a>
   </li>  
   <li class="nav-item">
+    <a class="nav-link" href="./documentation.html"> 
+<span class="menu-text">Documentation</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link" href="./about.html"> 
 <span class="menu-text">The Team</span></a>
   </li>  
@@ -120,8 +124,15 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#fpga-role" id="toc-fpga-role" class="nav-link active" data-scroll-target="#fpga-role">FPGA Role</a></li>
+  <li><a href="#fpga-system" id="toc-fpga-system" class="nav-link" data-scroll-target="#fpga-system">FPGA System</a></li>
+  </ul>
+<div class="quarto-code-links"><h2>Code Links</h2><ul><li><a href="https://github.com/lukesummers-20/knight-light"><i class="bi bi-github"></i>FPGA Repository</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -145,9 +156,21 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Test</p>
+<section id="fpga-role" class="level2">
+<h2 class="anchored" data-anchor-id="fpga-role">FPGA Role</h2>
+<p>The role of the FPGA in this project was to interact with the hall effect sensors. The SMT hall effect sensors we used were a new hardware that needed to be powered with 3.3 V on <code>Vcc</code> and ground on <code>GND</code>. Once powered they had an <code>OUT</code> pin that would provide a high signal in the absense of a magnetic field and a low signal if a magnet was nearby.</p>
+<p><img src="images/hallEffectPins.png" class="img-fluid"></p>
+<p>The hall effect sensors were aranged in a matrix. This allowed us to wire all the <code>Vcc</code> pins in parallel across the rows and the <code>OUT</code> pin in parallel across the columns. This design significantly saves on wires. Instead of needing 64 wires for each data pin, only 16 wires were used. Each of the eight row pins was powered one at a time and the packet of eight column pins was recorded. The packets could then be stitched together to create the current state of the board indicating where pieces are.</p>
+<p>Once the FPGA successfully scans through the rows and calculates the board state, it simulates the SPI protocol to send the board state over to the MCU.</p>
+</section>
+<section id="fpga-system" class="level1">
+<h1>FPGA System</h1>
+<p>The FPGA follows the block diagram layed out below.</p>
+<p><img src="images/fpgaDiagram.png" class="img-fluid"></p>
+<p>There are two main modules <code>scanningFSM</code> and <code>boardSPI</code>. <code>scanningFSM</code> first takes in <code>clk</code> which is a slowed down version of <code>int_osc</code> from the <code>HSOSC</code> module. It also takes <code>reset</code> in from the FPGA input <code>load</code> which comes from the MCU when it begins a new SPI request. Lastly it takes in <code>c</code> which is the</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -232,6 +255,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -342,6 +367,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
+      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
