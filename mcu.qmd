@@ -23,7 +23,7 @@ When a new board state was received from the FPGA, the MCU would go through the 
 \ 
 \ 
 
-When a piece was picked up, the MCU would first clear the lights array. It would then go through the picked up pieces next available moves and set those squares to one in the lights array. It would then light the lights according to the light array, with 0's in the array being lit blue and 1's being lit green. 
+When a piece was picked up, the MCU would first clear the lights array. It would then go through the picked up pieces next available moves and set those squares to one in the lights array. It would then light the lights according to the light array, with 0's in the array being lit blue and 1's being lit green. The MCU would hold the last update that occurred along with the current update as if two pick ups occurred in a row, then a piece was captured. This is because the piece that was doing the capturing is picked up, then the piece being captured is picked up, and then the piece doing the capturing is put down on the square of the piece that is captured. Thus, when a second pick up happened in a row, the captured piece's position was set to (-1, -1) so that it was no longer on the board, and the piece from the first update was saved into the update so that its position could be updated when it was put down.
 \
 \ 
 \ 
