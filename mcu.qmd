@@ -3,7 +3,7 @@ title: "MCU Design"
 format:
   html: 
     code-links:
-      - text: "FPGA Repository"
+      - text: "Code Repository"
         href: https://github.com/lukesummers-20/knight-light
         icon: github
 ---
