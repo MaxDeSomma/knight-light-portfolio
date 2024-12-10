@@ -39,7 +39,7 @@
     "href": "results.html",
     "title": "Project Results",
     "section": "",
-    "text": "Test"
+    "text": "Overview\nOur project was successful in creating a learning tool for those new to chess. The board would light up the correct available moves when a piece was picked up. It also successfully displayed checks and checkmate when they occurred. Our design was successful in handling pieces capturing other pieces as the game progressed.\n\n\nHardware Results\nThe board hardware was successful in capturing the positions of the squares with pieces on them. The board would occasionally have a square sense the magnetic field of a piece that was occupying an adjacent square, but the MCU code leveraged the fact that a piece could not be put down without it being picked up first in order to not have these errors affect the chess logic. The lights successfully displayed the desired color 100% of the time.\n\n\nChess Software Results\n100% of the time, the board successfully lit up with the available moves for a piece. The board also displayed checks with 100% accuracy. Since the code for checking check was based on the last picked up and placed down piece’s direction, if one side was placed in check and one of its pieces was picked up and placed down, the light to signify check would no longer be lit. The board signified check mate accurately 100% of the time, as long as the pieces were moved one at a time and in a legal(legal within the rules of chess) fashion.\n\n\nVideo of Design in Action"
   },
   {
     "objectID": "fpga.html",
@@ -60,6 +60,6 @@
     "href": "about.html",
     "title": "About the Team",
     "section": "",
-    "text": "Luke Summers:\nMax De Somma:"
+    "text": "Luke Summers: Luke is a senior computer science major at Harvey Mudd College. He has lived in southern California his whole life and enjoys golf and discrete forms of math. E155 Portfolio Website Linkedin\nMax De Somma: Max is a senior engineering major at Harvey Mudd College. He is one of the heads of Harvey Mudd’s machine shop and enjoys frequency domain mathematics. E155 Portfolio Website Linkedin"
   }
 ]

@@ -124,8 +124,17 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#hardware-results" id="toc-hardware-results" class="nav-link" data-scroll-target="#hardware-results">Hardware Results</a></li>
+  <li><a href="#chess-software-results" id="toc-chess-software-results" class="nav-link" data-scroll-target="#chess-software-results">Chess Software Results</a></li>
+  <li><a href="#video-of-design-in-action" id="toc-video-of-design-in-action" class="nav-link" data-scroll-target="#video-of-design-in-action">Video of Design in Action</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -149,9 +158,23 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Test</p>
+<section id="overview" class="level3">
+<h3 class="anchored" data-anchor-id="overview">Overview</h3>
+<p>Our project was successful in creating a learning tool for those new to chess. The board would light up the correct available moves when a piece was picked up. It also successfully displayed checks and checkmate when they occurred. Our design was successful in handling pieces capturing other pieces as the game progressed.</p>
+</section>
+<section id="hardware-results" class="level3">
+<h3 class="anchored" data-anchor-id="hardware-results">Hardware Results</h3>
+<p>The board hardware was successful in capturing the positions of the squares with pieces on them. The board would occasionally have a square sense the magnetic field of a piece that was occupying an adjacent square, but the MCU code leveraged the fact that a piece could not be put down without it being picked up first in order to not have these errors affect the chess logic. The lights successfully displayed the desired color 100% of the time.</p>
+</section>
+<section id="chess-software-results" class="level3">
+<h3 class="anchored" data-anchor-id="chess-software-results">Chess Software Results</h3>
+<p>100% of the time, the board successfully lit up with the available moves for a piece. The board also displayed checks with 100% accuracy. Since the code for checking check was based on the last picked up and placed down piece’s direction, if one side was placed in check and one of its pieces was picked up and placed down, the light to signify check would no longer be lit. The board signified check mate accurately 100% of the time, as long as the pieces were moved one at a time and in a legal(legal within the rules of chess) fashion.</p>
+</section>
+<section id="video-of-design-in-action" class="level3">
+<h3 class="anchored" data-anchor-id="video-of-design-in-action">Video of Design in Action</h3>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
