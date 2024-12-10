@@ -3,6 +3,7 @@ title: "Documentation"
 ---
 ## Schematic
 ![MCU and FPGA Schematic](images/schematic.png)
+Starting with the FPGA, it connects to 8 pins on the hall effect matrix scannign through the rows and powering each row on one by one. The columns of the hall effect matrix are then connected back into the FPGA so that the column data can stitched togetheras each row is only powered one at a time to get the full state of the board. One interesting note is that due to the amount of hall effect sensors we used together the data pins wre lowered from a 3.3V signal to 1V signal. To boost this so that the FPGA could reliably read the data non-inverting opampts were used to gain the signal an either rail it out at 3.3V if it was high and 0V if it was low. The FPGA was then connected to the MCU using four wires that allowed for the tranfer of data through SPI. Finally the MCU controlled the LED Strip which had two controllable pins `sdo` which is the data line and `clk` which it uses to read the `sdo` on. 
 
 ## PCB
 Since this design required 64 smt hall effect sensors and dozens of wires we decided to design PCB's to hold our hall effect sensors and allow us to easily wire them together in parallel across the rows and columns.
@@ -35,4 +36,6 @@ Total Cost = $65.09
 [First Look: APA102 RGB Pixel Addressable LED](https://www.youtube.com/watch?v=UYvC-hukz-0) - Great youtube video on how to get these LED's to turn on and change color
 
 [DRV5032 Hall Effect Sensor](https://www.ti.com/lit/ds/symlink/drv5032.pdf?HQS=dis-dk-null-digikeymode-dsf-pf-null-wwe&ts=1733760295978&ref_url=https%253A%252F%252Fwww.ti.com%252Fgeneral%252Fdocs%252Fsuppproductinfo.tsp%253FdistId%253D10%2526gotoUrl%253Dhttps%253A%252F%252Fwww.ti.com%252Flit%252Fgpn%252Fdrv5032) - Datasheet for the Ultra-Low-Power Digital-Switch Hall Effect Sensor 
+
+[MCP 600X Op Amp](https://ww1.microchip.com/downloads/en/DeviceDoc/MCP6001-1R-1U-2-4-1-MHz-Low-Power-Op-Amp-DS20001733L.pdf) - Datasheet for the MCP6004 Op Amps that we used
 

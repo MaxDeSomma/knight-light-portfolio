@@ -32,4 +32,7 @@ It also has three outputs `r`, `chessLayout`, and `done`. `r` is connected to th
 
 The FSM follows the diagram below. 
 ![](images/fsmDiagram.jpg)
-The FSM has 16 states and at every clock cycle it goes to the next state regardless of any input. Every two states it drives a different row high powering 
+The FSM has 16 states and at every clock cycle it goes to the next state regardless of any input. Every two states it drives a different row high powering them on at a time allowing the FSM to scan through the hall effect matrix. On the second of every two states it also records the the current column data to `chessPieces` which I abreviate CP. Since all the `DATA` pins are wired in parrallel when the column is recorded it should only recieve data from the specific row that is being powered by the FSM. We decided to record the data at the second state that the specific row was high as the data from the hall effect was less stable when first powered on, thus the second state allwed it to become stable before recording. Lastly once the FSM has traversed through all 16 states the done flag is set high and the output `chessLayout` is set to `chessPieces`.
+
+### boardSPI
+`boardSPI` has threee inputs `sck`, `boardState`, adn `done`. `sck` is ported from the mcu as the SPI clock. `boardState` comes from `scanningFSM` once it has collected the board date. Lastly `done` is recieved from `scanningFSM` and indicates to this module that `boardState` is stable and ready to sent over to the mcu. There is only on output which is 'sdo'. This module uses a custom SPI protocol similar to lab 7 that shifts out `sdo` one bit at a time on the negative edge of `sck` sending it over bit by bit.

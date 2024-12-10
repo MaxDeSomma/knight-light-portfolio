@@ -9,4 +9,4 @@ Luke Summers: Luke is a senior computer science major at Harvey Mudd College. He
 Max De Somma: Max is a senior engineering major at Harvey Mudd College. He is one of the heads of Harvey Mudd's machine shop and enjoys frequency domain mathematics. [E155 Portfolio Website](https://maxdesomma.github.io/hmc-e155-portfolio/) [Linkedin](https://www.linkedin.com/in/max-de-somma/)
 
 ### Acknowledgements
-We would like to thank the thingiverse.com user Renosis for designing chess pieces and posting them for public use. We would Xavier for telling us to use an operational amplifier in our circuit. We would lastly like to thank Kavi for teaching us the arts of bit banging.
+We would like to thank the thingiverse.com user Renosis for designing chess pieces and posting them for public use. We would like to thank Xavier for advising us to use an operational amplifier in our circuit. We would lastly like to thank Kavi for teaching us the arts of bit banging.
