@@ -160,16 +160,34 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="schematic" class="level2">
 <h2 class="anchored" data-anchor-id="schematic">Schematic</h2>
-<p><img src="images/schematic.png" class="img-fluid" alt="MCU and FPGA Schematic"> Starting with the FPGA, it connects to 8 pins on the hall effect matrix scannign through the rows and powering each row on one by one. The columns of the hall effect matrix are then connected back into the FPGA so that the column data can stitched togetheras each row is only powered one at a time to get the full state of the board. One interesting note is that due to the amount of hall effect sensors we used together the data pins wre lowered from a 3.3V signal to 1V signal. To boost this so that the FPGA could reliably read the data non-inverting opampts were used to gain the signal an either rail it out at 3.3V if it was high and 0V if it was low. The FPGA was then connected to the MCU using four wires that allowed for the tranfer of data through SPI. Finally the MCU controlled the LED Strip which had two controllable pins <code>sdo</code> which is the data line and <code>clk</code> which it uses to read the <code>sdo</code> on.</p>
+<p><img src="images/schematic.png" id="fig-schem" class="img-fluid" alt="MCU and FPGA Schematic"> Starting with the FPGA, it connects to 8 pins on the hall effect matrix scanning through the rows and powering each row on one by one. The columns of the hall effect matrix are then connected back into the FPGA so that the column data can stitched together as each row is only powered one at a time to get the full state of the board. One interesting note is that due to the amount of hall effect sensors we used together the data pins were lowered from a 3.3V signal to 1V signal. To boost this so that the FPGA could reliably read the data non-inverting operational amplifiers were used to gain the signal and either rail it out at 3.3V if it was high and 0V if it was low. The FPGA was then connected to the MCU using four wires that allowed for the transfer of data through SPI. Finally the MCU controlled the LED Strip which had two controllable pins <code>sdo</code> which is the data line and <code>clk</code> which it uses to read the <code>sdo</code> on.</p>
 </section>
 <section id="pcb" class="level2">
 <h2 class="anchored" data-anchor-id="pcb">PCB</h2>
-<p>Since this design required 64 smt hall effect sensors and dozens of wires we decided to design PCB’s to hold our hall effect sensors and allow us to easily wire them together in parallel across the rows and columns.</p>
-<p><img src="images/pcbDesign.png" class="img-fluid"></p>
-<p>We ended up using 64 of the boards displayed above, one under each tile. The hall effect sensor was located at <code>U1</code> which had three pads for the IC. <code>HC</code> which stood for Hall Col wired the <code>data</code> pin of our hall effect in parrallel across the column and allowed us to easily connect it to PCB’s below and above it. <code>HR</code> which stood for Hall Row wired the <code>Vcc</code> of the sensor in parallel across the row allowing us to easily connect multiple <code>Vcc</code> in parallel when seated next to each other.</p>
+<p>Since this design required 64 smt hall effect sensors and dozens of wires we decided to design PCB’s to hold our hall effect sensors and allow us to easily wire them together in parallel across the rows and columns. <a href="#fig-singlePCB" class="quarto-xref">Figure&nbsp;1</a> shows this design.</p>
+<div id="fig-singlePCB" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-singlePCB-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/pcbDesign.png" id="fig-singlePCB" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-singlePCB-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1
+</figcaption>
+</figure>
+</div>
+<p>We ended up using 64 of the boards displayed in <a href="#fig-singlePCB" class="quarto-xref">Figure&nbsp;1</a>, one under each tile. The hall effect sensor was located at <code>U1</code> which had three pads for the IC. <code>HC</code> which stood for Hall Col wired the <code>data</code> pin of our hall effect in parallel across the column and allowed us to easily connect it to PCB’s below and above it. <code>HR</code> which stood for Hall Row wired the <code>Vcc</code> of the sensor in parallel across the row allowing us to easily connect multiple <code>Vcc</code> in parallel when seated next to each other.</p>
 <p>The PCB also had additional through holes for a two pin LED to be connected across the rows and columns in the event that the individually addressable LED strip did not work. Luckily for us we were able to get it to work so the LED through holes were not used in our final design.</p>
-<p>The PCB ended up working perfecly in our project and helped us connect all the hall effect sensors together in a matrix like the photo below.</p>
-<p><img src="images/pcbMatrix.png" class="img-fluid"></p>
+<p>The PCB ended up working perfectly in our project and helped us connect all the hall effect sensors together in a matrix seen in <a href="#fig-matrix" class="quarto-xref">Figure&nbsp;2</a>.</p>
+<div id="fig-matrix" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-matrix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/pcbMatrix.png" id="fig-matrix" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-matrix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2
+</figcaption>
+</figure>
+</div>
 </section>
 <section id="bill-of-materials" class="level2">
 <h2 class="anchored" data-anchor-id="bill-of-materials">Bill of Materials</h2>
