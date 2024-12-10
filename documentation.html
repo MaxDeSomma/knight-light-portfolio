@@ -124,8 +124,17 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#schematic" id="toc-schematic" class="nav-link active" data-scroll-target="#schematic">Schematic</a></li>
+  <li><a href="#pcb" id="toc-pcb" class="nav-link" data-scroll-target="#pcb">PCB</a></li>
+  <li><a href="#bill-of-materials" id="toc-bill-of-materials" class="nav-link" data-scroll-target="#bill-of-materials">Bill of Materials</a></li>
+  <li><a href="#citation-and-documentations" id="toc-citation-and-documentations" class="nav-link" data-scroll-target="#citation-and-documentations">Citation and Documentations</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -149,9 +158,78 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p><img src="images/schematic.drawio.png" class="img-fluid"></p>
+<section id="schematic" class="level2">
+<h2 class="anchored" data-anchor-id="schematic">Schematic</h2>
+<p><img src="images/schematic.png" class="img-fluid" alt="MCU and FPGA Schematic"> Starting with the FPGA, it connects to 8 pins on the hall effect matrix scannign through the rows and powering each row on one by one. The columns of the hall effect matrix are then connected back into the FPGA so that the column data can stitched togetheras each row is only powered one at a time to get the full state of the board. One interesting note is that due to the amount of hall effect sensors we used together the data pins wre lowered from a 3.3V signal to 1V signal. To boost this so that the FPGA could reliably read the data non-inverting opampts were used to gain the signal an either rail it out at 3.3V if it was high and 0V if it was low. The FPGA was then connected to the MCU using four wires that allowed for the tranfer of data through SPI. Finally the MCU controlled the LED Strip which had two controllable pins <code>sdo</code> which is the data line and <code>clk</code> which it uses to read the <code>sdo</code> on.</p>
+</section>
+<section id="pcb" class="level2">
+<h2 class="anchored" data-anchor-id="pcb">PCB</h2>
+<p>Since this design required 64 smt hall effect sensors and dozens of wires we decided to design PCB’s to hold our hall effect sensors and allow us to easily wire them together in parallel across the rows and columns.</p>
+<p><img src="images/pcbDesign.png" class="img-fluid"></p>
+<p>We ended up using 64 of the boards displayed above, one under each tile. The hall effect sensor was located at <code>U1</code> which had three pads for the IC. <code>HC</code> which stood for Hall Col wired the <code>data</code> pin of our hall effect in parrallel across the column and allowed us to easily connect it to PCB’s below and above it. <code>HR</code> which stood for Hall Row wired the <code>Vcc</code> of the sensor in parallel across the row allowing us to easily connect multiple <code>Vcc</code> in parallel when seated next to each other.</p>
+<p>The PCB also had additional through holes for a two pin LED to be connected across the rows and columns in the event that the individually addressable LED strip did not work. Luckily for us we were able to get it to work so the LED through holes were not used in our final design.</p>
+<p>The PCB ended up working perfecly in our project and helped us connect all the hall effect sensors together in a matrix like the photo below.</p>
+<p><img src="images/pcbMatrix.png" class="img-fluid"></p>
+</section>
+<section id="bill-of-materials" class="level2">
+<h2 class="anchored" data-anchor-id="bill-of-materials">Bill of Materials</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Part Name</th>
+<th>Part #</th>
+<th>Vendor</th>
+<th>Link</th>
+<th>Qty</th>
+<th>Price</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Ultra-Low-Power Digital-Switch Hall Effect Sensor SMT</td>
+<td>DRV5032FADBZR</td>
+<td>Texas Instruments</td>
+<td><a href="https://www.digikey.com/en/products/detail/texas-instruments/DRV5032FADBZR/7400094">Link</a></td>
+<td>80</td>
+<td>$15.55</td>
+</tr>
+<tr class="even">
+<td>Custom Chess Tile PCB</td>
+<td>NA</td>
+<td>PCBWay</td>
+<td><a href="https://www.pcbway.com/?adwgc=666&amp;campaignid=172480651&amp;adgroupid=8787904531&amp;feeditemid=&amp;targetid=kwd-297443275619&amp;loc_physical_ms=9031250&amp;matchtype=p&amp;network=g&amp;device=c&amp;devicemodel=&amp;creative=672292899742&amp;keyword=pcbway&amp;placement=&amp;target=&amp;adposition=&amp;gad_source=1&amp;gclid=Cj0KCQiAx9q6BhCDARIsACwUxu4MHf2hCqpYhADrVKWBFoCBgt-iJkXg-l2FW0jXA-D55k7OfgAfiKUaAh5SEALw_wcB">Link</a></td>
+<td>75</td>
+<td>$49.54</td>
+</tr>
+<tr class="odd">
+<td>Scrap Wood</td>
+<td>NA</td>
+<td>Machine Shop</td>
+<td>NA</td>
+<td>1</td>
+<td>$0.00</td>
+</tr>
+<tr class="even">
+<td>Chess Pieces</td>
+<td>NA</td>
+<td>Makerspace 3D Printer</td>
+<td>NA</td>
+<td>1</td>
+<td>$0.00</td>
+</tr>
+</tbody>
+</table>
+<p>Total Cost = $65.09</p>
+</section>
+<section id="citation-and-documentations" class="level2">
+<h2 class="anchored" data-anchor-id="citation-and-documentations">Citation and Documentations</h2>
+<p><a href="https://cdn-shop.adafruit.com/product-files/2477/APA102C-iPixelLED.pdf">APA102 LED data sheet</a> - We used older APA101A LED’s but this was the closest data sheet available.</p>
+<p><a href="https://www.youtube.com/watch?v=UYvC-hukz-0">First Look: APA102 RGB Pixel Addressable LED</a> - Great youtube video on how to get these LED’s to turn on and change color</p>
+<p><a href="https://www.ti.com/lit/ds/symlink/drv5032.pdf?HQS=dis-dk-null-digikeymode-dsf-pf-null-wwe&amp;ts=1733760295978&amp;ref_url=https%253A%252F%252Fwww.ti.com%252Fgeneral%252Fdocs%252Fsuppproductinfo.tsp%253FdistId%253D10%2526gotoUrl%253Dhttps%253A%252F%252Fwww.ti.com%252Flit%252Fgpn%252Fdrv5032">DRV5032 Hall Effect Sensor</a> - Datasheet for the Ultra-Low-Power Digital-Switch Hall Effect Sensor</p>
+<p><a href="https://ww1.microchip.com/downloads/en/DeviceDoc/MCP6001-1R-1U-2-4-1-MHz-Low-Power-Op-Amp-DS20001733L.pdf">MCP 600X Op Amp</a> - Datasheet for the MCP6004 Op Amps that we used</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

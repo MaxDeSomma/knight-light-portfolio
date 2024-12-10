@@ -164,7 +164,48 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="hardware-results" class="level3">
 <h3 class="anchored" data-anchor-id="hardware-results">Hardware Results</h3>
-<p>The board hardware was successful in capturing the positions of the squares with pieces on them.</p>
+<section id="hall-effect-results" class="level4">
+<h4 class="anchored" data-anchor-id="hall-effect-results">Hall Effect Results</h4>
+<p>The hall effect sensors were successful in capturing the positions of the squares with pieces on them. The first part of the entire board was gettign the hall effect sensors to accurately sense where a piece was placed. All the hall effect sensor’s <code>Vcc</code>’s were wired in parallel across the row and <code>DATA</code> across the column to save on pins as we did not have 64 pins to read each. In the oscilloscope image below we can see the output of the FPGA scannign through the hall effect’s rows.</p>
+<p><img src="images/hallScanning.png" class="img-fluid"></p>
+<p>We are only checking one of the rows but can see that the FPGA is properly setting one row high 1/8 of the time and cycling through the others. We can then check the output of the columns to make sure that the hall effect matrix is outputting the correct data.</p>
+<p><img src="images/hallbeforOp.png" class="img-fluid"></p>
+<p>In the image above we can see the column data of a column of tiles where one pawn has made one move. When a piece is on the hall effect sensor it will output a low signal and when there is no magnetic field it will output a high signal. So this properly captures where pieces are in the formation [XOXOOOXX] where X are pieces and O are empty squares. However the one thing is that the signal caps at a voltage of 1V. In order to fix this opamps were used giving us the following trace below.</p>
+<p><img src="images/hallafterOp.png" class="img-fluid"></p>
+<p>This looks much better and can be accurately read by the FPGA, proving our hall effect hardware worked as intended.</p>
+</section>
+<section id="spi-results" class="level4">
+<h4 class="anchored" data-anchor-id="spi-results">SPI Results</h4>
+<p>Once we are able to accurately read in data from the hall effect sensors on the state of the board we had to send thsi data over to the MCU using SPI. The trace below uses the logic analyzer and captures the SPI of board state as it is when the game starts.</p>
+<p><img src="images/spiOrigin.png" class="img-fluid"></p>
+<p>In the image <code>D0 -&gt; PA10 -&gt; Load</code>, <code>D2 -&gt; PA6 -&gt; Done</code>, <code>D3 -&gt; PB3 -&gt; SCLK</code>, and <code>D5 -&gt; PB4 -&gt; MISO</code>. We can see in the trace that as soon as <code>Done</code> goes high spi beings and we canb see <code>SCLK</code> oscillate for eight transactions of 8 bits totaling the 64 bit board state. <code>MISO</code> is low for the first two transactions then high for four and low for the last two which is exactly how a chess board would look with 16 pieces in the first 16 tiles no pieces in the middle 32 tiles and 16 pieces in the last 16 tiles. After 8 transactions <code>Load</code> goes high to reset the FPGA’s SPI protocol setting <code>Done</code> low and one SPI transaction is completed before <code>Load</code> goes low and the cycle continues as it should.</p>
+<p>You can see some examples in the next few images.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/whitePawnsMoved.png" class="img-fluid figure-img"></p>
+<figcaption>SPI trace where all the white pawns have been moved one tile forward</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/zigzag.png" class="img-fluid figure-img"></p>
+<figcaption>Zoomed in SPI trace where all the white pawns are in a zigzag</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/random.png" class="img-fluid figure-img"></p>
+<figcaption>SPI trace where all the pieces are in random tiles imitating the middle of a game</figcaption>
+</figure>
+</div>
+</section>
+<section id="led-results" class="level4">
+<h4 class="anchored" data-anchor-id="led-results">LED Results</h4>
+<p>Once we know that the hall effect sensors were working and SPI was correctly sending the data over to the MCU the last step was to make sure the lights were being bitbanged correctly. Again we used the oscilloscope logic analyzer to capture when the LED was beign sent data and clk.</p>
+<p><img src="images/ledSPI.png" class="img-fluid"></p>
+<p>In the frame above <code>D2 -&gt; PB0 -&gt; SDO</code> and <code>D5 -&gt; PA9 -&gt; CLK</code>. We can clearly see the bit banged clock and data working as intended. If we zoom in more like the iamge below we can see that data changes correclty on the fallign edge of the clock and that the clock has a duty cycle of 50%.</p>
+<p><img src="images/ledSPIzoom.png" class="img-fluid"></p>
+</section>
 </section>
 <section id="chess-software-results" class="level3">
 <h3 class="anchored" data-anchor-id="chess-software-results">Chess Software Results</h3>
