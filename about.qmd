@@ -4,6 +4,6 @@ title: "About the Team"
 
 ![](images/IMG_1430.png)
 
-Luke Summers:
+Luke Summers: Luke is a senior computer science major at Harvey Mudd College. He has lived in southern California his whole life and enjoys golf and discrete forms of math. [E155 Portfolio Website](https://lukesummers-20.github.io/E155-Portfolio/) [Linkedin](https://www.linkedin.com/in/luke-summers-370075251/)
 
-Max De Somma:
+Max De Somma: Max is a senior engineering major at Harvey Mudd College. He is one of the heads of Harvey Mudd's machine shop and enjoys frequency domain mathematics. [E155 Portfolio Website](https://maxdesomma.github.io/hmc-e155-portfolio/) [Linkedin](https://www.linkedin.com/in/max-de-somma/)
