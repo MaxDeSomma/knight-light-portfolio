@@ -15,7 +15,7 @@ The role of the FPGA in this project was to interact with the hall effect sensor
 
 The hall effect sensors were aranged in a matrix. This allowed us to wire all the `Vcc` pins in parallel across the rows and the `OUT` pin in parallel across the columns. This design significantly saves on wires. Instead of needing 64 wires for each data pin, only 16 wires were used. Each of the eight row pins was powered one at a time and the packet of eight column pins was recorded. The packets could then be stitched together to create the current state of the board indicating where pieces are. 
 
-Once the FPGA successfully scans through the rows and calculates the board state, it simulates the SPI protocol to send the board state over to the MCU. 
+Once the FPGA successfully scans through the rows and calculates the board state, it simulates the SPI protocol to send the board state over to the MCU. The MCU is then in charge of taking that board data and turning on specific LED's and updating the current state. The FPGA coninually sends SPI packets to the MCU as the MCU loops through its while loop to make sure it has up to date board data. 
 
 # FPGA System
 
@@ -23,5 +23,13 @@ The FPGA follows the block diagram layed out below.
 
 ![](images/fpgaDiagram.png)
 
-There are two main modules `scanningFSM` and `boardSPI`. `scanningFSM` first takes in `clk` which is a slowed down version of `int_osc` from the `HSOSC` module. It also takes `reset` in from the FPGA input `load` which comes from the MCU when it begins a new SPI request. Lastly it takes in `c` which is the 
+There are two main modules `scanningFSM` and `boardSPI`. 
 
+### scanningFSM
+`scanningFSM` has three inputs `clk`, `reset`, and `c`. `clk` drives the fsm which is a slowed down version of `int_osc` from the `HSOSC` module. `reset` is recieved from the top level module input `load` which is set by the MCU when it begins a new SPI request.  Laslty `c`  is the packet of 8 bit column data from the hall effect matrix. 
+
+It also has three outputs `r`, `chessLayout`, and `done`. `r` is connected to the rows of the hall effect matrix turning the `Vcc` of each row's hall effect sensors on one at a time. `chessLayout` is a 64 bit value that represent which tiles have pieces on them and is created by stitching together `c` at different timing. Lastly `done` is a signal that is sent to the mcu that tells it when the FPGA has stable board data and can send it over spi. 
+
+The FSM follows the diagram below. 
+![](images/fsmDiagram.jpg)
+The FSM has 16 states and at every clock cycle it goes to the next state regardless of any input. Every two states it drives a different row high powering 

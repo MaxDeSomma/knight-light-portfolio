@@ -1,7 +1,38 @@
 ---
 title: "Documentation"
 ---
+## Schematic
+![MCU and FPGA Schematic](images/schematic.png)
 
-![](images/schematic.drawio.png)
+## PCB
+Since this design required 64 smt hall effect sensors and dozens of wires we decided to design PCB's to hold our hall effect sensors and allow us to easily wire them together in parallel across the rows and columns.
 
+![](images/pcbDesign.png)
+
+We ended up using 64 of the boards displayed above, one under each tile. The hall effect sensor was located at `U1` which had three pads for the IC. `HC` which stood for Hall Col wired the `data` pin of our hall effect in parrallel across the column and allowed us to easily connect it to PCB's below and above it. `HR` which stood for Hall Row wired the `Vcc` of the sensor in parallel across the row allowing us to easily connect multiple `Vcc` in parallel when seated next to each other. 
+
+The PCB also had additional through holes for a two pin LED to be connected across the rows and columns in the event that the individually addressable LED strip did not work. Luckily for us we were able to get it to work so the LED through holes were not used in our final design.
+
+The PCB ended up working perfecly in our project and helped us connect all the hall effect sensors together in a matrix like the photo below. 
+
+![](images/pcbMatrix.png)
+
+
+
+## Bill of Materials
+| Part Name | Part # | Vendor | Link | Qty | Price|
+|-----------|--------|--------|------|-----|------|
+| Ultra-Low-Power Digital-Switch Hall Effect Sensor SMT|DRV5032FADBZR|Texas Instruments|[Link](https://www.digikey.com/en/products/detail/texas-instruments/DRV5032FADBZR/7400094)|80|$15.55|
+|Custom Chess Tile PCB|NA|PCBWay|[Link](https://www.pcbway.com/?adwgc=666&campaignid=172480651&adgroupid=8787904531&feeditemid=&targetid=kwd-297443275619&loc_physical_ms=9031250&matchtype=p&network=g&device=c&devicemodel=&creative=672292899742&keyword=pcbway&placement=&target=&adposition=&gad_source=1&gclid=Cj0KCQiAx9q6BhCDARIsACwUxu4MHf2hCqpYhADrVKWBFoCBgt-iJkXg-l2FW0jXA-D55k7OfgAfiKUaAh5SEALw_wcB)|75|$49.54|
+|Scrap Wood|NA|Machine Shop|NA|1|$0.00|
+|Chess Pieces|NA|Makerspace 3D Printer|NA|1|$0.00|
+
+Total Cost = $65.09
+
+## Citation and Documentations
+[APA102 LED data sheet](https://cdn-shop.adafruit.com/product-files/2477/APA102C-iPixelLED.pdf) - We used older APA101A LED's but this was the closest data sheet available.
+
+[First Look: APA102 RGB Pixel Addressable LED](https://www.youtube.com/watch?v=UYvC-hukz-0) - Great youtube video on how to get these LED's to turn on and change color
+
+[DRV5032 Hall Effect Sensor](https://www.ti.com/lit/ds/symlink/drv5032.pdf?HQS=dis-dk-null-digikeymode-dsf-pf-null-wwe&ts=1733760295978&ref_url=https%253A%252F%252Fwww.ti.com%252Fgeneral%252Fdocs%252Fsuppproductinfo.tsp%253FdistId%253D10%2526gotoUrl%253Dhttps%253A%252F%252Fwww.ti.com%252Flit%252Fgpn%252Fdrv5032) - Datasheet for the Ultra-Low-Power Digital-Switch Hall Effect Sensor 
 

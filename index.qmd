@@ -10,7 +10,7 @@ format:
 # Project Overview 
 
 ## Project Abstract
-The goal of this project was to create a smart chess board. Everytime a chess piece is picked up our chess board will calculate the pieces available moves and light up specific moves. It will take into account board boundries and other chess pieces so that there are no illegal moves as well as display when the specific piece is able to capture an opponents piece. (IF WE GET CHECK TO WORK PUT HERE)
+The goal of this project was to create a smart chess board. Everytime a chess piece is picked up our chess board will calculate the pieces available moves and light up specific moves. It will take into account board boundries and other chess pieces so that there are no illegal moves as well as display when the specific piece is able to capture an opponents piece. Laslty the board will notify the player when their King is in check and when they are in Check Mate losing the game. 
 
 ## Project Motivation
 We wanted to create this as our Microps final project because we thought this could make chess more accessible to younger people or those unfamiliar to the game of chess. There are many pieces in chess with different move patterns. New players often overlook all the possible moves that they could make with each piece and when you can capture opposing pieces. Lastly on of the hardest parts of chess that takes experience is knowing when you are in check. Our board will help aid new players and allow them to get into the game of chess. We thought that we could use the skills we learned in Microps to bring this idea to life. 
