@@ -6,26 +6,26 @@ Our project was successful in creating a learning tool for those new to chess. T
 
 ### Hardware Results
 #### Hall Effect Results
-The hall effect sensors were successful in capturing the positions of the squares with pieces on them. The first part of the entire board was gettign the hall effect sensors to accurately sense where a piece was placed. All the hall effect sensor's `Vcc`'s were wired in parallel across the row and `DATA` across the column to save on pins as we did not have 64 pins to read each. In the oscilloscope image below we can see the output of the FPGA scannign through the hall effect's rows. 
+The hall effect sensors were successful in capturing the positions of the squares with pieces on them. The first part of the entire board was getting the hall effect sensors to accurately sense where a piece was placed. All the hall effect sensor's `Vcc`'s were wired in parallel across the row and `DATA` across the column to save on pins as we did not have 64 pins to read each. In @fig-scan we can see the output of the FPGA scanning through the hall effect's rows. 
 
-![](images/hallScanning.png)
+![](images/hallScanning.png){#fig-scan}
 
 We are only checking one of the rows but can see that the FPGA is properly setting one row high 1/8 of the time and cycling through the others. We can then check the output of the columns to make sure that the hall effect matrix is outputting the correct data.
 
-![](images/hallbeforOp.png)
+![](images/hallbeforOp.png){#fig-preOp}
 
-In the image above we can see the column data of a column of tiles where one pawn has made one move. When a piece is on the hall effect sensor it will output a low signal and when there is no magnetic field it will output a high signal. So this properly captures where pieces are in the formation [XOXOOOXX] where X are pieces and O are empty squares. However the one thing is that the signal caps at a voltage of 1V. In order to fix this opamps were used giving us the following trace below.
+In @fig-preOp we can see the column data of a column of tiles where one pawn has made one move. When a piece is on the hall effect sensor it will output a low signal and when there is no magnetic field it will output a high signal. So this properly captures where pieces are in the formation [XOXOOOXX] where X are pieces and O are empty squares. However the one thing is that the signal caps at a voltage of 1V. In order to fix this operational amplifiers were used giving us the trace in @fig-postOp.
 
-![](images/hallafterOp.png)
+![](images/hallafterOp.png){#fig-postOp}
 
 This looks much better and can be accurately read by the FPGA, proving our hall effect hardware worked as intended.
 
 #### SPI Results
-Once we are able to accurately read in data from the hall effect sensors on the state of the board we had to send thsi data over to the MCU using SPI. The trace below uses the logic analyzer and captures the SPI of board state as it is when the game starts. 
+Once we are able to accurately read in data from the hall effect sensors on the state of the board we had to send this data over to the MCU using SPI. @fig-origin uses the logic analyzer and captures the SPI of board state as it is when the game starts. 
 
-![](images/spiOrigin.png)
+![](images/spiOrigin.png){#fig-origin}
 
-In the image `D0 -> PA10 -> Load`, `D2 -> PA6 -> Done`, `D3 -> PB3 -> SCLK`, and `D5 -> PB4 -> MISO`. We can see in the trace that as soon as `Done` goes high spi beings and we canb see `SCLK` oscillate for eight transactions of 8 bits totaling the 64 bit board state. `MISO` is low for the first two transactions then high for four and low for the last two which is exactly how a chess board would look with 16 pieces in the first 16 tiles no pieces in the middle 32 tiles and 16 pieces in the last 16 tiles. After 8 transactions `Load` goes high to reset the FPGA's SPI protocol setting `Done` low and one SPI transaction is completed before `Load` goes low and the cycle continues as it should. 
+In @fig-origin `D0 -> PA10 -> Load`, `D2 -> PA6 -> Done`, `D3 -> PB3 -> SCLK`, and `D5 -> PB4 -> MISO`. We can see in the trace that as soon as `Done` goes high spi beings and we can see `SCLK` oscillate for eight transactions of 8 bits totaling the 64 bit board state. `MISO` is low for the first two transactions then high for four and low for the last two which is exactly how a chess board would look with 16 pieces in the first 16 tiles no pieces in the middle 32 tiles and 16 pieces in the last 16 tiles. After 8 transactions `Load` goes high to reset the FPGA's SPI protocol setting `Done` low and one SPI transaction is completed before `Load` goes low and the cycle continues as it should. 
 
 You can see some examples in the next few images.
 
@@ -38,13 +38,13 @@ You can see some examples in the next few images.
 
 #### LED Results 
 
-Once we know that the hall effect sensors were working and SPI was correctly sending the data over to the MCU the last step was to make sure the lights were being bitbanged correctly. Again we used the oscilloscope logic analyzer to capture when the LED was beign sent data and clk. 
+Once we know that the hall effect sensors were working and SPI was correctly sending the data over to the MCU the last step was to make sure the lights were being bitbanged correctly. Again we used the oscilloscope logic analyzer to capture when the LED was being sent data and clk. 
 
-![](images/ledSPI.png)
+![](images/ledSPI.png){#fig-ledSpi}
 
-In the frame above `D2 -> PB0 -> SDO` and `D5 -> PA9 -> CLK`. We can clearly see the bit banged clock and data working as intended. If we zoom in more like the iamge below we can see that data changes correclty on the fallign edge of the clock and that the clock has a duty cycle of 50%. 
+In @fig-ledSpi `D2 -> PB0 -> SDO` and `D5 -> PA9 -> CLK`. We can clearly see the bit banged clock and data working as intended. If we zoom in more like in @fig-ledZ we can see that data changes correctly on the falling edge of the clock and that the clock has a duty cycle of 50%. 
 
-![](images/ledSPIzoom.png)
+![](images/ledSPIzoom.png){#fig-ledZ}
 
 ### Chess Software Results
 100% of the time, the board successfully lit up with the available moves for a piece. The board also displayed checks with 100% accuracy. Since the code for checking check was based on the last picked up and placed down piece's direction, if one side was placed in check and one of its pieces was picked up and placed down, the light to signify check would no longer be lit. The board signified check mate accurately 100% of the time, as long as the pieces were moved one at a time, placed directly over magnet sensors, and in a legal(legal within the rules of chess) fashion. The software was able to successfully ignore erroneous signals from the board. Sometimes, the magnetic field from a piece would set of the sensor of an empty square adjacent to that piece's square, and this was ignored in software by leveraging the fact that a signal of a piece being put down could only occur after a piece was picked up. Because the erroneous signal would signal a put down without a piece being picked up, ensuring a piece was picked up before a put down successfully evaded this error in signal.

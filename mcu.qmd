@@ -1,12 +1,18 @@
 ---
 title: "MCU Design"
+format:
+  html: 
+    code-links:
+      - text: "FPGA Repository"
+        href: https://github.com/lukesummers-20/knight-light
+        icon: github
 ---
 
 ### Overview
 The role of the MCU in this project was to carry out all of the chess logic and drive the lights based on the current state of the game. After setting up the required peripherals and allocating the required variables, the main loop of the MCU code would receive the board data via SPI and then check to see if anything changed. If a piece was picked up, the MCU would light the next moves of that piece. If a piece was put down, the MCU would stop lighting the squares it was previously lighting and then carry out the calculations to update the game state data based on the move.
 
 ### Interface with the LED Strip
-While we used the APA101 LED's strip for individually addressabel LED's the only data sheet we could find wa sthe APA102C the newer generation of the same LED. WHile this already was not good news the data sheet did not provide much information.
+While we used the APA101 LED's strip for individually addressable LED's the only data sheet we could find was the APA102C the newer generation of the same LED. WHile this already was not good news the data sheet did not provide much information.
 
 ![](images/ledClock.png)
 
@@ -16,7 +22,7 @@ The image above was the only data on the protocol. From the physical hardware we
 
 The LED strip takes in frames of 32 bit data. It must first begin with a start frame and then LED frames can be sent in with the first coding the first LED and every subsequent frame coding another LED. In the LED frame the first 3 bits need to be high, the next 5 bits control the brightness, and the last 24 bits determine the balance of RGB it will have. For instance if you wanted a really bright green light the LED frame would be 32'b1111111000000001111111100000000 or an LED with no light would be 32'b11100000000000000000000000000000.
 
-Many libraries exist specifically to control these types of LED's but for our project we decided to bitbang the protocol. To bitbang the `CLK` and `DATA` we set both to be GPIO output pins. We first set `CLK` to be low while changing `DATA` to the first bit we then delayed for a giving amount and changed `CLK` to high and waiting the same amount of time until the process repeated for all 32 birts in a frame or all 2080 bits in the lighting of 64 LEDS. 
+Many libraries exist specifically to control these types of LED's but for our project we decided to bitbang the protocol. To bitbang the `CLK` and `DATA` we set both to be GPIO output pins. We first set `CLK` to be low while changing `DATA` to the first bit we then delayed for a giving amount and changed `CLK` to high and waiting the same amount of time until the process repeated for all 32 bits in a frame or all 2080 bits in the lighting of 64 LEDS. 
 
 The timing the strip required was not specific, just that the clock signal was symmetrical (50% duty cycle). When lighting the whole board, the MCU would start by sending start frame and then would then light each LED in the strip its desired color. In the design, blue was used as the color to signify a square. Green was used to highlight the squares a piece could move to when it was picked up. And red was used when a check occurred, lighting up the King's square, or when checkmate occurred, lighting up the whole board in red.
 
@@ -30,7 +36,7 @@ The MCU made use of an array of 64 booleans to represent the occupation status o
 When a new game is started, the board array gets filled according to the starting position of a chess game, which is rows 1, 2, 7, and 8 being filled and the rest empty. This array could then be referenced as new board states come in to see if a change occurred and updated if necessary. The pieces array gets filled with each piece getting its starting position and no next moves, with the exceptions of the pawns and knights which get filled with their initial available moves. This array was then updated after each move to reflect the position change of the piece that moved, and to reflect the change in next available moves for pieces.
 
 ### Updating Chess Variables
-When a new board state was received from the FPGA, the MCU would go through the new board state to see if anything changed and make any necessary updates. The MCU would receive 8 chars from the FPGA, so it would first have to convert this into booleans. The MCU went through one row of the board at a time, and would first convert char representing the row into an array of 8 booleans. The FPGA would send chars where a 1 bit represented an empty square and a 0 bit represented an occupied square, so the bits would have to be flipped at before going through them. Once the char was correctly transformed into the array of 8 booleans, the MCU would then go through the row to see if a change occurred. If no change occurred, it would go onto the next row. If a change occurred, then the MCU would have a struct that housed the necessary information of the update. This struct contained a pointer to the piece that created the update and variable to signify if the update was a piece being picked up or put down. 
+When a new board state was received from the FPGA, the MCU would go through the new board state to see if anything changed and make any necessary updates. The MCU would receive 8 chars from the FPGA, so it would first have to convert this into booleans. The MCU went through one row of the board at a time, and would first convert char representing the row into an array of 8 booleans. The FPGA would send chars where a 1 bit represented an empty square and a 0 bit represented an occupied square, so the bits would have to be flipped before going through them. Once the char was correctly transformed into the array of 8 booleans, the MCU would then go through the row to see if a change occurred. If no change occurred, it would go onto the next row. If a change occurred, then the MCU would have a struct that housed the necessary information of the update. This struct contained a pointer to the piece that created the update and variable to signify if the update was a piece being picked up or put down. 
 \ 
 \ 
 \ 

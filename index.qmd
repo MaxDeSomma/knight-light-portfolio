@@ -21,7 +21,7 @@ We wanted to create this as our Microps final project because we thought this co
 
 ![](images/systemDesign.png)
 
-To sense when pieces are picked up. Digital hall effect sensors are used that sense a magnetic field. Each piece will be fitted with a magnet so that when it is lifted the hall effect sensors will sense a change in magnetic field and our system will be able to control the individually adressable LEDs to light up available moves and captures. In our design the FPGA is responsible for controlling 64 hall effect sensors powering them on and recieving board data from them. It will then use SPI to send the data over to the MCU. From there the MCU will control the individually addressable LED's lighting up specific colors. (AND MAYBE SPEAKER).
+To sense when pieces are picked up. Digital hall effect sensors are used that sense a magnetic field. Each piece will be fitted with a magnet so that when it is lifted the hall effect sensors will sense a change in magnetic field and our system will be able to control the individually adressable LEDs to light up available moves and captures. In our design the FPGA is responsible for controlling 64 hall effect sensors powering them on and recieving board data from them. It will then use SPI to send the data over to the MCU. From there the MCU will control the individually addressable LED's lighting up specific colors.
 
 ## New Hardware
 One part of this class was using new hardware that we had not previously used in this class. We decided to use two new pieces of hardware: a digital hall effect sensor and individually addressable LED's. 
