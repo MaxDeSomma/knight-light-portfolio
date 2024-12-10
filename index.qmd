@@ -34,5 +34,7 @@ The hall effect sensor we decided to use was a smt digital hall effect sensor sh
 ### Individually Addressable LED
 The other new hardware we used was this roll of Individually addressable LED's that we found in the lab. There was no data sheet for this model of LED's making it a fun challenge of trying to program them to display specific colors. We were able to find the data sheet of the newer version of the LED's and go off that. In order to code the LED strip we ended up bitbanging the specific protocol by creating our own clock using a GPIO pin and changing the data on the falling edge similar to SPI. This ended up working extremely well and we ended up being able to set any LED to any RGB color we could think of. 
 
+![](images/ledStrip.jpg)
+
 
 
