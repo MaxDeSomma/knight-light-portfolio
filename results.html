@@ -132,7 +132,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
   <li><a href="#hardware-results" id="toc-hardware-results" class="nav-link" data-scroll-target="#hardware-results">Hardware Results</a></li>
   <li><a href="#chess-software-results" id="toc-chess-software-results" class="nav-link" data-scroll-target="#chess-software-results">Chess Software Results</a></li>
-  <li><a href="#video-of-design-in-action" id="toc-video-of-design-in-action" class="nav-link" data-scroll-target="#video-of-design-in-action">Video of Design in Action</a></li>
+  <li><a href="#design-in-action" id="toc-design-in-action" class="nav-link" data-scroll-target="#design-in-action">Design in Action</a></li>
   </ul>
 </nav>
     </div>
@@ -164,14 +164,64 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="hardware-results" class="level3">
 <h3 class="anchored" data-anchor-id="hardware-results">Hardware Results</h3>
-<p>The board hardware was successful in capturing the positions of the squares with pieces on them. The board would occasionally have a square sense the magnetic field of a piece that was occupying an adjacent square, but the MCU code leveraged the fact that a piece could not be put down without it being picked up first in order to not have these errors affect the chess logic. The lights successfully displayed the desired color 100% of the time.</p>
+<p>The board hardware was successful in capturing the positions of the squares with pieces on them.</p>
 </section>
 <section id="chess-software-results" class="level3">
 <h3 class="anchored" data-anchor-id="chess-software-results">Chess Software Results</h3>
-<p>100% of the time, the board successfully lit up with the available moves for a piece. The board also displayed checks with 100% accuracy. Since the code for checking check was based on the last picked up and placed down piece’s direction, if one side was placed in check and one of its pieces was picked up and placed down, the light to signify check would no longer be lit. The board signified check mate accurately 100% of the time, as long as the pieces were moved one at a time and in a legal(legal within the rules of chess) fashion.</p>
+<p>100% of the time, the board successfully lit up with the available moves for a piece. The board also displayed checks with 100% accuracy. Since the code for checking check was based on the last picked up and placed down piece’s direction, if one side was placed in check and one of its pieces was picked up and placed down, the light to signify check would no longer be lit. The board signified check mate accurately 100% of the time, as long as the pieces were moved one at a time, placed directly over magnet sensors, and in a legal(legal within the rules of chess) fashion. The software was able to successfully ignore erroneous signals from the board. Sometimes, the magnetic field from a piece would set of the sensor of an empty square adjacent to that piece’s square, and this was ignored in software by leveraging the fact that a signal of a piece being put down could only occur after a piece was picked up. Because the erroneous signal would signal a put down without a piece being picked up, ensuring a piece was picked up before a put down successfully evaded this error in signal.</p>
 </section>
-<section id="video-of-design-in-action" class="level3">
-<h3 class="anchored" data-anchor-id="video-of-design-in-action">Video of Design in Action</h3>
+<section id="design-in-action" class="level3">
+<h3 class="anchored" data-anchor-id="design-in-action">Design in Action</h3>
+<div id="fig-pcb" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pcb-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/pcb.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pcb-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Chess Square with LED and PCB
+</figcaption>
+</figure>
+</div>
+<p><a href="#fig-pcb" class="quarto-xref">Figure&nbsp;1</a> shows a picture of a chess board square with the designed PCB and LED on the LED strip under it.</p>
+<div id="fig-board" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-board-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/board.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-board-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Board Circuit
+</figcaption>
+</figure>
+</div>
+<p><a href="#fig-board" class="quarto-xref">Figure&nbsp;2</a> shows the circuit for the chess board.</p>
+<div id="fig-cir" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-cir-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/circuit.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cir-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: MCU and FPGA Circuit
+</figcaption>
+</figure>
+</div>
+<p><a href="#fig-cir" class="quarto-xref">Figure&nbsp;3</a> shows a picture of the circuit that includes the MCU and FPGA.</p>
+<div id="fig-piece" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-piece-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/piece.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-piece-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Chess Piece
+</figcaption>
+</figure>
+</div>
+<p><a href="#fig-piece" class="quarto-xref">Figure&nbsp;4</a> shows a picture of a rook piece, along with the magnet under each piece.</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/EIwHz8Lorng" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<p>The above video shows the design handling each pieces movement correctly and a capture.</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/g9YUqjgflJA" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<p>The above video shows the design handling a check correctly.</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/OsyHHGObwck" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<p>The above video shows the design handling a checkmate correctly.</p>
 
 
 </section>
