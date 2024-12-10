@@ -5,9 +5,37 @@ title: "Project Results"
 Our project was successful in creating a learning tool for those new to chess. The board would light up the correct available moves when a piece was picked up. It also successfully displayed checks and checkmate when they occurred. Our design was successful in handling pieces capturing other pieces as the game progressed.
 
 ### Hardware Results
-The board hardware was successful in capturing the positions of the squares with pieces on them. The board would occasionally have a square sense the magnetic field of a piece that was occupying an adjacent square, but the MCU code leveraged the fact that a piece could not be put down without it being picked up first in order to not have these errors affect the chess logic. The lights successfully displayed the desired color 100% of the time.
+The board hardware was successful in capturing the positions of the squares with pieces on them. 
 
 ### Chess Software Results
-100% of the time, the board successfully lit up with the available moves for a piece. The board also displayed checks with 100% accuracy. Since the code for checking check was based on the last picked up and placed down piece's direction, if one side was placed in check and one of its pieces was picked up and placed down, the light to signify check would no longer be lit. The board signified check mate accurately 100% of the time, as long as the pieces were moved one at a time and in a legal(legal within the rules of chess) fashion. 
+100% of the time, the board successfully lit up with the available moves for a piece. The board also displayed checks with 100% accuracy. Since the code for checking check was based on the last picked up and placed down piece's direction, if one side was placed in check and one of its pieces was picked up and placed down, the light to signify check would no longer be lit. The board signified check mate accurately 100% of the time, as long as the pieces were moved one at a time, placed directly over magnet sensors, and in a legal(legal within the rules of chess) fashion. The software was able to successfully ignore erroneous signals from the board. Sometimes, the magnetic field from a piece would set of the sensor of an empty square adjacent to that piece's square, and this was ignored in software by leveraging the fact that a signal of a piece being put down could only occur after a piece was picked up. Because the erroneous signal would signal a put down without a piece being picked up, ensuring a piece was picked up before a put down successfully evaded this error in signal.
 
-### Video of Design in Action
+### Design in Action
+![Chess Square with LED and PCB](images/pcb.png){#fig-pcb}
+
+@fig-pcb shows a picture of a chess board square with the designed PCB and LED on the LED strip under it.
+
+![Board Circuit](images/board.png){#fig-board}
+
+@fig-board shows the circuit for the chess board.
+
+![MCU and FPGA Circuit](images/circuit.png){#fig-cir}
+
+@fig-cir shows a picture of the circuit that includes the MCU and FPGA.
+
+![Chess Piece](images/piece.png){#fig-piece}
+
+@fig-piece shows a picture of a rook piece, along with the magnet under each piece.
+
+{{< video https://youtu.be/EIwHz8Lorng >}}
+
+The above video shows the design handling each pieces movement correctly and a capture.
+
+{{< video https://youtu.be/g9YUqjgflJA >}}
+
+The above video shows the design handling a check correctly.
+
+{{< video https://youtu.be/OsyHHGObwck >}}
+
+The above video shows the design handling a checkmate correctly.
+
